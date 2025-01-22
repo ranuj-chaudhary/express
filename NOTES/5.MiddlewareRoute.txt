@@ -1,0 +1,16 @@
+// ROUTING
+
+// for all routes
+
+app.use((req, res, next) => {
+  console.log('this is global middleware');
+  next()
+});
+
+
+// for specific route
+app.use('/about', (req, res, next) => {
+console.log("I am middleware for about route")
+
+next()
+})

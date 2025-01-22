@@ -1,0 +1,7 @@
+
+http://localhost:8000?name=ranujchoudhary&dob=01051991
+
+app.get("/", function (req, res) {
+  const {name, dob} = req.query
+  res.send("name" + name + "dob" + dob)
+});

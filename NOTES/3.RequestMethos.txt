@@ -1,0 +1,17 @@
+
+// METHODS
+app.get("/", function (req, res) {
+  res.send("Home Page");
+});
+
+app.post("/about", function (req, res) {
+  res.send("About Page");
+});
+
+app.put("/about", function (req, res) {
+  res.send("About Page");
+});
+
+app.delete("/contact", function (req, res) {
+  res.send("Contact Page");
+});

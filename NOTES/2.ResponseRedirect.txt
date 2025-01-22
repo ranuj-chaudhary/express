@@ -1,0 +1,10 @@
+
+
+// METHODS
+app.get('/name', function (req, res) {
+  res.send('My Name is Ranuj Chaudhary');
+});
+
+app.get('/yourname', function (req, res) {
+  res.redirect('http://localhost:8000/name');
+});

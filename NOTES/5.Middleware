@@ -1,0 +1,51 @@
+Uses of Middleware
+
+1) APPLICATION LEVEL MIDDLEWARE
+2) ROUTE LEVEL MIDDLEWARE
+
+// VALIDATION
+// AUTHORISATION
+// AUTHENTICATION
+// REQUEST LIMIT
+// SECURITY MEASURES
+
+
+// MIDDLE WARE
+app.use(bodyParser.json());
+
+
+// Global error handler
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    const error = {
+      "LIMIT_FILE_SIZE": "File size exceeds the limit!",
+      "LIMIT_FILE_COUNT": ""Too many files!"",
+      "LIMIT_UNEXPECTED_FILE": "File size exceeds the limit!",
+      "LIMIT_FILE_SIZE": "Unexpected file uploaded!",
+    }
+    
+    const errorMsg = err.code ? error[err.code] : err.message;
+  
+    if (err.code) {
+        return res.status(400).send(errorMsg);
+    }
+     
+    return res.status(400).send(`Multer error: ${errorMsg}`);
+  }
+
+  if (err) {
+    // Handle other errors
+    console.error(err);
+    return res.status(500).send("Internal Server Error");
+  }
+
+  next();
+});
+
+
+// FOR SPECIFIC ROUTE
+app.use('/about', (req, res, next) => {
+console.log("I am middleware for about route")
+
+next()
+})

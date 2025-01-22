@@ -1,0 +1,35 @@
+// 1) Request
+
+
+
+
+
+// 2) Response
+// handling Response
+
+// a) BODY
+// -default is html data
+
+// b) STATUS
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+For Client error responses (refer mdn)
+    - 400 Bad Request
+    - 402 Payment Required
+    - 403 Forbidden
+    - 404 Not Found
+    - 405 Method Not Allowed
+
+// c) HEADERd
+
+// d) COOKIES
+
+
+
+// 3) Middleware
+
+
+
+
+
+// 4) Database Operations
