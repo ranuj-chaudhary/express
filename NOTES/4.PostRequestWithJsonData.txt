@@ -1,0 +1,38 @@
+
+1) install package in express BODY PARSER to accept data as JSON
+
+AFTER EXPRESS APPLY BODY PARSER
+
+var bodyParser = require('body-parser');
+
+// will parse all BODY payload from request
+
+app.use(bodyParser.json());
+
+
+
+2) SEND DATA FROM POST REQUEST WITH JSON FORMAT DATA
+
+Body Payload with raw JSON
+{
+    "username": "ranuj choudhary", "password" : "123456"
+}
+
+
+3) RECIEVED AT SERVER SIDE
+app.post('/', function (req, res) {
+
+  const JSONData = req.body;
+
+  let JSONString = JSON.stringify(JSONData);
+
+  res.send(JSONString);
+});
+
+4) SERVER RETURN THE JSON Stringify data
+
+RETURN JSON stringify DATA
+{
+    "username": "ranuj choudhary", "password" : "123456"
+}
+

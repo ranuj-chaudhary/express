@@ -1,0 +1,5 @@
+
+
+app.get('/download', function (req, res) {
+  res.download('./uploads/git.png');
+});

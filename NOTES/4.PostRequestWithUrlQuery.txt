@@ -1,0 +1,6 @@
+http://localhost:8000?name=ranujchoudhary&dob=01051991
+
+app.post("/", function (req, res) {
+  const {name, dob} = req.query
+  res.send("name" + name + "dob" + dob)
+});

@@ -1,0 +1,16 @@
+// save cookies
+
+app.get('/header', function (req, res) {
+    res.cookie('name', 'ranuj');
+    res.cookie('dob', '01051991');
+    res.cookie('age', '10 years old');
+    res.end('Cookie added successfully');
+});
+
+// remove cookies
+
+app.get('/header', function (req, res) {
+  res.clearCookie('name', 'ranuj');
+  res.clearCookie('dob', '01051991');
+  res.end('Cookie cleared successfully');
+});

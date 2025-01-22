@@ -1,0 +1,34 @@
+app.get('/', function (req, res) {
+  res.append('name', 'ranuj');
+  res.append('dob', '01/05/1991');
+  res.status(201).end('header sent successfully')
+});
+
+
+
+
+res.append vs res.header
+
+Key Differences
+Feature	res.append	res.header / res.set
+
+
+res.header
+Purpose: Sets a response header to a specific value, overwriting any existing value for the header.
+Use Case: Used when you need to replace or set a specific value for a header
+
+example:
+res.header('Content-Type', 'application/json');
+res.header('Content-Type', 'text/html'); // Overwrites the previous value.
+
+
+
+res.append
+Purpose: Adds a value to an existing HTTP header or creates the header if it doesn't exist.
+Use Case: Used when you need to add multiple values to the same header field. It ensures that 
+the values are appended, not overwritten.
+example:
+res.append('Set-Cookie', 'userId=12345');
+res.append('Set-Cookie', 'theme=dark');
+
+

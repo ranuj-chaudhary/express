@@ -1,0 +1,94 @@
+const crypto = require('crypto');
+const multer = require('multer');
+
+
+// MIDDLE WARE
+// express.static(): Serves static files such as images, CSS, and JavaScript files.
+
+app.use(express.static('public'));
+
+
+// Global error handler
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    switch (err.code) {
+      case "LIMIT_FILE_SIZE":
+        return res.status(400).send("File size exceeds the limit!");
+      case "LIMIT_FILE_COUNT":
+        return res.status(400).send("Too many files!");
+      case "LIMIT_UNEXPECTED_FILE":
+        return res.status(400).send("Unexpected file uploaded!");
+      default:
+        return res.status(400).send(`Multer error: ${err.message}`);
+    }
+  }
+
+  if (err) {
+    // Handle other errors
+    console.error(err);
+    return res.status(500).send("Internal Server Error");
+  }
+
+  next();
+});
+
+
+// Configure Multer's storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+
+    cb(null, "uploads/"); // Folder to store uploaded files
+  },
+  filename: (req, file, cb) => {
+    // Generate a hash-like name (eaef960d7cb323be476edf5b699fa994)
+    const uniqueName = crypto.createHash("md5").update(Date.now().toString()).digest("hex");
+    const extension = file.originalname.split(".").pop(); // Extract file extension
+    cb(null, `${uniqueName}.${extension}`); // Save with hash + original extension
+  },
+});
+
+// Initialize Multer
+const upload = multer({ storage });
+
+// Route for file upload
+app.post("/upload", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded!");
+  }
+  console.log(req.file); // File information
+  res.send(`File uploaded successfully with name: ${req.file.filename}`);
+});
+
+
+app.post('/profile', upload.none(), function (req, res, next) {
+  // req.body contains the text fields
+})
+
+// In case you need to handle a text-only multipart form, 
+// you should use the .none() method:
+
+app.post("/upload-multiple", (req, res) => {
+  upload.array("files", 5)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      // Handle Multer-specific errors
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).send("File size exceeds the limit of 2MB!");
+      }
+      if (err.code === "LIMIT_FILE_COUNT") {
+        return res.status(400).send("Too many files uploaded!");
+      }
+      return res.status(400).send(`Multer error: ${err.message}`);
+    } else if (err) {
+      // Handle unknown errors
+      return res.status(500).send("An unknown error occurred.");
+    }
+
+    // Success
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).send("No files uploaded!");
+    }
+
+    const uploadedFiles = req.files.map((file) => file.filename);
+    res.send(`Files uploaded successfully: ${uploadedFiles.join(", ")}`);
+  });
+});

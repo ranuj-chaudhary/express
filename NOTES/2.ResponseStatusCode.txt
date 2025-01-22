@@ -1,0 +1,39 @@
+1) Response codes
+
+For Client error responses (refer mdn)
+    - 400 Bad Request
+    - 402 Payment Required
+    - 403 Forbidden
+    - 404 Not Found
+    - 405 Method Not Allowed
+
+// METHODS
+app.get("/", function (req, res) {
+  res.status(401).end(
+   ' Bad Request'
+  );
+});
+app.get("/first", function (req, res) {
+  res.status(402).end(
+    'Payment Required'
+  );
+});
+app.get("/second", function (req, res) {
+  res.status(403).end(
+    'Forbidden'
+  );
+});
+app.get("/third", function (req, res) {
+  res.status(404).end(
+    'Not Found'
+  );
+});
+app.get("/fourth", function (req, res) {
+  res.status(405).end(
+    'Method Not Allowed'
+  );
+});
+
+
+
+check difference in res.send and res.end

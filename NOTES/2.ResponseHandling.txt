@@ -1,0 +1,11 @@
+1) Simple String responses
+// METHODS
+app.get("/", function (req, res) {
+  res.end("Home Page");
+});
+
+app.post("/about", function (req, res) {
+  res.send("About Page");
+});
+
+check difference in res.send and res.end
